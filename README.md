@@ -1,6 +1,6 @@
 # Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app) and was modified by the [React-admin tutorial](https://marmelab.com/react-admin/Tutorial.html).
 
 ## Available Scripts
 
