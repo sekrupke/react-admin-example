@@ -4,9 +4,9 @@ import {
     Datagrid,
     Edit,
     EditButton,
-    List,
+    List, maxLength, minLength,
     ReferenceField,
-    ReferenceInput,
+    ReferenceInput, required,
     SelectInput,
     SimpleForm,
     SimpleList,
@@ -20,6 +20,8 @@ const PostEditTitle = () => {
     const record = useRecordContext();
     return <span>Edit of post {record ? `"${record.title}"` : ''}</span>
 }
+
+const validateTitle = [required(), minLength(2), maxLength(100)];
 
 export const PostFilters = [
     <TextInput source="q" label="Search" alwaysOn />,
@@ -59,8 +61,8 @@ export const PostEdit = () => (
             <ReferenceInput source="userId" reference="users">
                 <SelectInput optionText="name" />
             </ReferenceInput>
-            <TextInput source="title" />
-            <TextInput multiline source="body" />
+            <TextInput source="title" validate={validateTitle}/>
+            <TextInput fullWidth multiline source="body" />
         </SimpleForm>
     </Edit>
 );
@@ -72,7 +74,7 @@ export const PostCreate = props => (
                 <SelectInput optionText="name"/>
             </ReferenceInput>
             <TextInput source="title"/>
-            <TextInput multiline source="body"/>
+            <TextInput fullWidth multiline source="body"/>
         </SimpleForm>
     </Create>
 );
