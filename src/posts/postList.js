@@ -4,65 +4,63 @@ import {
     Datagrid,
     Edit,
     EditButton,
-    Filter,
     List,
     ReferenceField,
     ReferenceInput,
     SelectInput,
     SimpleForm,
+    SimpleList,
     TextField,
     TextInput,
-    SimpleList
+    useRecordContext
 } from 'react-admin';
-import {useMediaQuery} from '@material-ui/core';
+import {useMediaQuery} from "@mui/material";
 
-const PostEditTitle = ({record}) => {
+const PostEditTitle = () => {
+    const record = useRecordContext();
     return <span>Edit of post {record ? `"${record.title}"` : ''}</span>
 }
 
-export const PostFilter = (props) => (
-    <Filter {...props}>
-        <TextInput label="Search" source="q" alwaysOn />
-        <ReferenceInput label="User" source="userId" reference="users" allowEmpty>
-            <SelectInput optionText="name" />
-        </ReferenceInput>
-    </Filter>
-)
+export const PostFilters = [
+    <TextInput source="q" label="Search" alwaysOn />,
+    <ReferenceInput source="userId" label="User" reference="users">
+        <SelectInput optionText="name" />
+    </ReferenceInput>,
+]
 
-export const PostList = (props) => {
+export const PostList = () => {
     const smallView = useMediaQuery(theme => theme.breakpoints.down('sm'));
 
     return (
-        <List filters={<PostFilter/>} {...props}>
+        <List filters={PostFilters}>
             {smallView ? (
                 <SimpleList
                     primaryText={record => record.title}
-                    secondaryText={record => record.id}
-                    tertiaryText={record => "31.12.2021"}
+                    secondaryText={record => `${record.views} views`}
+                    tertiaryText={record => new Date(record.published_at).toLocaleDateString()}
                 />
-                ) : (
-                <Datagrid>
-                    <TextField source="id"/>
+            ) : (
+                <Datagrid rowClick="edit">
+                    <TextField source="id" />
                     <ReferenceField source="userId" reference="users">
-                        <TextField source="name"/>
+                        <TextField source="name" />
                     </ReferenceField>
-                    <TextField source="title"/>
-                    <EditButton/>
+                    <TextField source="title" />
+                    <EditButton />
                 </Datagrid>
             )}
         </List>
     )
 };
 
-export const PostEdit = props => (
-    <Edit title={<PostEditTitle/>} {...props}>
+export const PostEdit = () => (
+    <Edit title={<PostEditTitle />}>
         <SimpleForm>
-            <TextInput disabled source="id"/>
             <ReferenceInput source="userId" reference="users">
-                <SelectInput optionText="name"/>
+                <SelectInput optionText="name" />
             </ReferenceInput>
-            <TextInput source="title"/>
-            <TextInput multiline source="body"/>
+            <TextInput source="title" />
+            <TextInput multiline source="body" />
         </SimpleForm>
     </Edit>
 );

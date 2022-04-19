@@ -1,28 +1,16 @@
 import * as React from "react";
-import { useRecordContext } from 'react-admin';
-import { makeStyles } from '@material-ui/core/styles';
-import LaunchIcon from '@material-ui/icons/Launch';
-
-const customUrlStyle = makeStyles({
-    link: {
-        textDecoration: 'none',
-    },
-    icon: {
-        width: '0.5em',
-        height: '0.5em',
-        paddingLeft: 2,
-    },
-});
+import {useRecordContext} from 'react-admin';
+import {Link} from '@mui/material';
+import LaunchIcon from '@mui/icons-material/Launch';
 
 const CustomUrlField = ({ source }) => {
     const record = useRecordContext();
-    const styleClasses = customUrlStyle();
 
     return record ? (
-        <a href={record[source]} className={styleClasses.link}>
+        <Link href={record[source]} sx={{ textDecoration: 'none' }}>
             {record[source]}
-            <LaunchIcon className={styleClasses.icon} />
-        </a>
+            <LaunchIcon sx={{ width: '0.5em', height: '0.5em', paddingLeft: 2 }} />
+        </Link>
     ) : null;
 }
 

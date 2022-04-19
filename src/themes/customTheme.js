@@ -1,13 +1,13 @@
-import red from '@material-ui/core/colors/red';
-import {createTheme} from "@material-ui/core";
+import red from '@mui/material/colors/red';
+import {createTheme} from "@mui/material";
 
 export const customTheme = createTheme({
     palette: {
         primary: {
-            main: '#5f5e5a'
+            main: '#6f5e5a',
         },
         secondary: {
-            main: '#5f5e5a'
+            main: '#6f5e5a'
         },
         error: red,
         contrastThreshold: 3,
@@ -17,11 +17,13 @@ export const customTheme = createTheme({
         // Use the system font instead of the default Roboto font.
         fontFamily: ['-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Arial', 'sans-serif'].join(','),
     },
-    overrides: {
+    components: {
         MuiButton: { // override the styles of all instances of this component
-            root: { // Name of the rule
-                backgroundColor: '#ffce04',
-                border: '1px solid grey'
+            styleOverrides: {
+                root: { // Name of the rule
+                    backgroundColor: '#facea4',
+                    border: '1px solid grey'
+                },
             },
         },
     },
