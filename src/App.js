@@ -1,23 +1,20 @@
 import * as React from "react";
 import {Admin, Resource} from 'react-admin';
-import jsonServerProvider from 'ra-data-json-server';
-import {UserList} from './users/userList';
-import {PostCreate, PostEdit, PostList} from './posts/postList';
-import PostIcon from '@mui/icons-material/Book';
-import UserIcon from '@mui/icons-material/Group';
+import simpleRestProvider from 'ra-data-simple-rest';
 import Dashboard from './dashboard/dashboard';
 import authProvider from './auth/authProvider'
 import {customTheme} from "./themes/customTheme";
 import CustomLayout from "./themes/customLayout";
+import {FeedList} from "./feeds/feedList";
 
-const dataProvider = jsonServerProvider('https://jsonplaceholder.typicode.com');
-
+//const dataProvider = jsonServerProvider('/api');
 //const i18nProvider = polyglotI18nProvider(() => germanMessages, 'de')
 
+const simpleRestDataProver = simpleRestProvider('/api')
+
 const App = () => (
-    <Admin layout={CustomLayout} theme={customTheme} dashboard={Dashboard} authProvider={authProvider} dataProvider={dataProvider}>
-        <Resource name="posts" list={PostList} edit={PostEdit} create={PostCreate} icon={PostIcon}/>
-        <Resource name="users" list={UserList} icon={UserIcon}/>
+    <Admin layout={CustomLayout} theme={customTheme} dashboard={Dashboard} authProvider={authProvider} dataProvider={simpleRestDataProver}>
+        <Resource name="feeds" list={FeedList} />
     </Admin>
 );
 
