@@ -2,21 +2,13 @@ import * as React from "react";
 import {
     Datagrid,
     EditButton,
-    List,
+    List, ReferenceManyField,
     TextField,
-    useGetManyReference,
+    SingleFieldList, ChipField, useListContext, useRecordContext
 } from 'react-admin';
 import {Box, Typography} from "@mui/material";
 
 export const FeedList = () => {
-    const { data, isLoading, error } = useGetManyReference(
-        'threats',
-        {
-            target: 'id',
-        }
-    );
-    if (isLoading) { return null; }
-    if (error) { return <p>There is no data available!</p>; }
 
     return (
         <List emptyWhileLoading={true} empty={<EmptyList />}>
@@ -25,12 +17,12 @@ export const FeedList = () => {
                 <TextField source="name"/>
                 <TextField source="type"/>
                 <TextField source="description"/>
-                <ul>
-                    {data.map(threat => (
-                        <li key={threat.id}>{threat.entry}</li>
-                    ))}
-                </ul>
-                <EditButton/>
+                <ReferenceManyField label={"Assigned Threats"} reference={"threatFeedRelation"} target={"feed"}>
+                    <SingleFieldList>
+                        <ChipField source="threat" />
+                    </SingleFieldList>
+                </ReferenceManyField>
+                <EditButton />
             </Datagrid>
         </List>
     )
